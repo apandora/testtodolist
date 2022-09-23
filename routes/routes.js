@@ -55,8 +55,16 @@ router.patch('/update/:id', async (req, res) => {
 })
 
 //Delete by ID Method
-router.delete('/delete/:id', (req, res) => {
-    res.send('Delete by ID API')
+router.delete('/delete/:id', async (req, res) => {
+    try {
+        await Todo.deleteOne({"_id": req.params.id})
+
+        
+        res.status(200).json({})
+    }
+    catch (error) {
+        res.status(500).json({message: error.message})
+    }
 })
 
 module.exports = router;
